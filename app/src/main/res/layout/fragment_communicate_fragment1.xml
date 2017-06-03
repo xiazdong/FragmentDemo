@@ -1,24 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        />
+    android:layout_height="match_parent"
+    android:background="#ff0000"
+    >
+
     <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/btn_comm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Fragment1"
+        android:text="Fragment向Activity传递数据"
         />
     <Button
-        android:id="@+id/btn_go"
+        android:id="@+id/btn_comm2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GOTO Fragment2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_comm"
+        android:text="Fragment向Fragment传递数据"
         />
+
+
 </RelativeLayout>

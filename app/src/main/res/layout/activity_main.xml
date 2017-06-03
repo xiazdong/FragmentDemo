@@ -10,4 +10,10 @@
         android:layout_height="wrap_content"
         android:text="1、Fragment基本使用"
         />
+    <Button
+        android:id="@+id/btn_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2、Fragment通信"
+        />
 </LinearLayout>

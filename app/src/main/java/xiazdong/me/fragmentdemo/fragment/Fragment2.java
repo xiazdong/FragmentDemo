@@ -16,7 +16,7 @@ import xiazdong.me.fragmentdemo.R;
  * Created by xiazdong on 17/5/24.
  */
 
-public class Fragment1 extends Fragment{
+public class Fragment2 extends Fragment {
 
     @Override
     public void onAttach(Context context) {
@@ -45,25 +45,24 @@ public class Fragment1 extends Fragment{
         super.onActivityCreated(savedInstanceState);
         Timber.d("[onActivityCreated] END");
     }
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Timber.d("[onCreateView]");
-        View view = inflater.inflate(R.layout.fragment_1, container, false);
+        View view = inflater.inflate(R.layout.fragment_2, container, false);
         Button btn = (Button) view.findViewById(R.id.btn_go);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment2 f2 = Fragment2.newInstance();
+                Fragment3 f3 = Fragment3.newInstance();
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, f2, "f2")
-                        .addToBackStack(Fragment2.class.getSimpleName())
+                        .replace(R.id.container, f3, "f3")
+                        .addToBackStack(Fragment3.class.getSimpleName())
                         .commit();
             }
         });
         return view;
     }
+
     @Override
     public void onStart() {
         Timber.d("[onStart] BEGIN");
@@ -113,7 +112,7 @@ public class Fragment1 extends Fragment{
         Timber.d("[onDetach] END");
     }
 
-    public static Fragment1 newInstance() {
-        return new Fragment1();
+    public static Fragment2 newInstance() {
+        return new Fragment2();
     }
 }

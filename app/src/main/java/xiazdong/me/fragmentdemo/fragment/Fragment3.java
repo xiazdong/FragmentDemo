@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import xiazdong.me.fragmentdemo.R;
  * Created by xiazdong on 17/5/24.
  */
 
-public class Fragment1 extends Fragment{
+public class Fragment3 extends Fragment {
 
     @Override
     public void onAttach(Context context) {
@@ -45,25 +46,20 @@ public class Fragment1 extends Fragment{
         super.onActivityCreated(savedInstanceState);
         Timber.d("[onActivityCreated] END");
     }
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Timber.d("[onCreateView]");
-        View view = inflater.inflate(R.layout.fragment_1, container, false);
-        Button btn = (Button) view.findViewById(R.id.btn_go);
-        btn.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_3, container, false);
+        Button popBtn = (Button) view.findViewById(R.id.btn_go);
+        popBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment2 f2 = Fragment2.newInstance();
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, f2, "f2")
-                        .addToBackStack(Fragment2.class.getSimpleName())
-                        .commit();
+                getFragmentManager().popBackStack(Fragment2.class.getSimpleName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
         return view;
     }
+
     @Override
     public void onStart() {
         Timber.d("[onStart] BEGIN");
@@ -113,7 +109,7 @@ public class Fragment1 extends Fragment{
         Timber.d("[onDetach] END");
     }
 
-    public static Fragment1 newInstance() {
-        return new Fragment1();
+    public static Fragment3 newInstance() {
+        return new Fragment3();
     }
 }

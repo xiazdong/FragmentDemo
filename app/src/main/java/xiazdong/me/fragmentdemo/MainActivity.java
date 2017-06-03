@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.btn_1)
     Button mButton1;
+    @BindView(R.id.btn_2)
+    Button mButton2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +23,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mButton1.setOnClickListener(this);
+        mButton2.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_1: goToActivity(BasicActivity.class); break;
+            case R.id.btn_2: goToActivity(CommunicateActivity.class);break;
         }
     }
     void goToActivity(Class activity) {

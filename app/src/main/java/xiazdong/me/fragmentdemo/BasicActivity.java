@@ -7,7 +7,10 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
+import xiazdong.me.fragmentdemo.fragment.CommunicateFragment1;
 import xiazdong.me.fragmentdemo.fragment.Fragment1;
+import xiazdong.me.fragmentdemo.fragment.Fragment2;
+import xiazdong.me.fragmentdemo.fragment.Fragment3;
 
 public class BasicActivity extends AppCompatActivity {
 
@@ -17,7 +20,11 @@ public class BasicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic);
         ButterKnife.bind(this);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, Fragment1.newInstance()).commit();
+        Fragment1 f1 = Fragment1.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, f1, "f1")
+                //.addToBackStack(Fragment1.class.getSimpleName())
+                .commit();
         Timber.d("[onCreate] END");
     }
 
@@ -68,6 +75,13 @@ public class BasicActivity extends AppCompatActivity {
         Timber.d("[onPause] BEGIN");
         super.onPause();
         Timber.d("[onPause] END");
+    }
+
+    @Override
+    protected void onRestart() {
+        Timber.d("[onRestart] BEGIN");
+        super.onRestart();
+        Timber.d("[onRestart] END");
     }
 
     @Override
