@@ -46,7 +46,7 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<MaterialMetaData> getMaterials(int index) {
         int begin = index * COUNT;
-        int end = Math.min(mData.size(), begin + COUNT - 1);
+        int end = Math.min(mData.size(), begin + COUNT);
         return new ArrayList<>(mData.subList(begin, end));
     }
 }
