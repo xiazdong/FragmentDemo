@@ -1,4 +1,4 @@
-package xiazdong.me.fragmentdemo;
+package xiazdong.me.fragmentdemo.config;
 
 import timber.log.Timber;
 

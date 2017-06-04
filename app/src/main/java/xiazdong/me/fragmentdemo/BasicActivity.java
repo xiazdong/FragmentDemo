@@ -23,7 +23,6 @@ public class BasicActivity extends AppCompatActivity {
         Fragment1 f1 = Fragment1.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, f1, "f1")
-                //.addToBackStack(Fragment1.class.getSimpleName())
                 .commit();
         Timber.d("[onCreate] END");
     }

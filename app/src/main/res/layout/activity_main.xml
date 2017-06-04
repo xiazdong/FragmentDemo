@@ -16,4 +16,10 @@
         android:layout_height="wrap_content"
         android:text="2、Fragment通信"
         />
+    <Button
+        android:id="@+id/btn_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3、TabLayout, ViewPager, Fragment"
+        />
 </LinearLayout>
