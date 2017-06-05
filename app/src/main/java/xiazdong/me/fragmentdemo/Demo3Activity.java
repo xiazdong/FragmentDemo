@@ -16,14 +16,17 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 import xiazdong.me.fragmentdemo.db.CategoryMetaData;
 import xiazdong.me.fragmentdemo.loader.CategoryLoader;
+import xiazdong.me.fragmentdemo.util.PrefUtils;
 import xiazdong.me.fragmentdemo.viewpager.CategoryPagerAdapter;
 
-public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener, View.OnClickListener {
 
     @BindView(R.id.tablayout)
     TabLayout mTabLayout;
     @BindView(R.id.viewpager)
     ViewPager mPager;
+    @BindView(R.id.text)
+    TextView mNoneView;
 
     private CategoryLoader mCategoryLoader;
     private CategoryPagerAdapter mCategoryAdapter;
@@ -43,7 +46,7 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         mCategoryLoader.start();
         mTabLayout.addOnTabSelectedListener(this);
         mPager.addOnPageChangeListener(this);
-
+        mNoneView.setOnClickListener(this);
     }
 
     private void setTabLayout(List<CategoryMetaData> datas) {
@@ -86,5 +89,29 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    public void updateCategoryViewPager() {
+        mCategoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        mCategoryAdapter.setUpdateCurrentTab(true);
+        clearSelectedPreference();
+        updateCategoryViewPager();
+    }
+
+    public void clearSelectedPreference() {
+        PrefUtils.remove(PrefUtils.PREFS_KEY_SELECTED_TAB);
+        PrefUtils.remove(PrefUtils.PREFS_KEY_SELECTED_PAGE);
+        PrefUtils.remove(PrefUtils.PREFS_KEY_SELECTED_MATERIAL);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearSelectedPreference();
     }
 }

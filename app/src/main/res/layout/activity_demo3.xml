@@ -16,4 +16,14 @@
         android:layout_below="@id/tablayout"
         android:background="#eeeeee"
         />
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="无"
+        android:gravity="center"
+        android:layout_below="@id/viewpager"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        />
 </RelativeLayout>

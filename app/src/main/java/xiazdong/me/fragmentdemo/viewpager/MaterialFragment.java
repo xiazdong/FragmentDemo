@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import java.util.ArrayList;
 
 import timber.log.Timber;
+import xiazdong.me.fragmentdemo.Demo3Activity;
 import xiazdong.me.fragmentdemo.R;
 import xiazdong.me.fragmentdemo.config.GlobalContext;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
@@ -41,17 +42,16 @@ public class MaterialFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private MaterialAdapter mAdapter;
-    private Context mContext;
+    private Demo3Activity mActivity;
     private SharedPreferences mSf;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mContext = context;
+        this.mActivity = (Demo3Activity) context;
         mTabIndex = getArguments().getInt(ARG_KEY_TAB_INDEX);
         mPageIndex = getArguments().getInt(ARG_KEY_PAGE_INDEX);
         mData = getArguments().getParcelableArrayList(ARG_KEY_LIST);
-        Timber.d(mData.toString());
     }
 
     @Override
@@ -59,18 +59,25 @@ public class MaterialFragment extends Fragment {
         View root = inflater.inflate(R.layout.material, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
         mAdapter = new MaterialAdapter(R.layout.item_recyclerview, mData);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, MaterialPagerAdapter.COLUMN));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, MaterialPagerAdapter.COLUMN));
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MaterialMetaData data = mData.get(position);
                 int oldSelectedId = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, -1);
-                int oldPosition = getPositionByMaterialId(oldSelectedId);
+                int oldPosition = getPositionByMaterialId(oldSelectedId); //查看当前页是否有这个素材
                 if (oldSelectedId != data._id) {
                     PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, data._id);
-                    adapter.notifyItemChanged(oldPosition);
+                    PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, mPageIndex);
+                    PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_TAB, mTabIndex);
                     adapter.notifyItemChanged(position);
+                    if (oldSelectedId != -1) {
+                        adapter.notifyItemChanged(oldPosition);
+                    }
                 }
+                CategoryFragment cFragment = (CategoryFragment) getParentFragment();
+                cFragment.updateMaterialViewPager();
+                mActivity.updateCategoryViewPager();
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -95,5 +102,12 @@ public class MaterialFragment extends Fragment {
             }
         }
         return -1;
+    }
+
+    public int getPageIndex() {
+        return mPageIndex;
+    }
+    public int getTabIndex() {
+        return mTabIndex;
     }
 }

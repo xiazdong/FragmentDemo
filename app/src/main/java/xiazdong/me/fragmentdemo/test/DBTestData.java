@@ -27,7 +27,7 @@ public final class DBTestData {
         }
     }
     public static class Material {
-        private static int[] count = {5,7,3,10,15};
+        private static int[] count = {0,7,10,10,15};
         private static MaterialMetaData getMetaData(int cid, String name, int downloaded) {
             return new MaterialMetaData(cid, name, downloaded);
         }

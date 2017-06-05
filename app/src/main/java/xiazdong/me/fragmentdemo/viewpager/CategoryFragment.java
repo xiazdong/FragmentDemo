@@ -47,12 +47,14 @@ public class CategoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.category, container, false);
         mPager = (ViewPager) root.findViewById(R.id.pager);
         mIndicator = (CirclePageIndicator) root.findViewById(R.id.indicator);
+
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Timber.d("onResume " + mPosition);
         mMaterialLoader = new MaterialLoader(this, mPosition);
         mMaterialLoader.setOnMaterialLoadedListener(new MaterialLoader.OnMaterialLoadedListener() {
             @Override
@@ -72,4 +74,13 @@ public class CategoryFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    public void updateMaterialViewPager() {
+        mMaterialAdapter.notifyDataSetChanged();
+    }
+
+    public int getIndex() {
+        return mPosition;
+    }
+
 }
