@@ -91,15 +91,15 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
 
     }
 
-    public void updateCategoryViewPager() {
+    public void updateCategoryViewPager(boolean updateCurrentTab) {
+        mCategoryAdapter.setUpdateCurrentTab(updateCurrentTab);
         mCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
-        mCategoryAdapter.setUpdateCurrentTab(true);
         clearSelectedPreference();
-        updateCategoryViewPager();
+        updateCategoryViewPager(true);
     }
 
     public void clearSelectedPreference() {

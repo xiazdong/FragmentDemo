@@ -1,6 +1,5 @@
 package xiazdong.me.fragmentdemo.viewpager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import timber.log.Timber;
 import xiazdong.me.fragmentdemo.Demo3Activity;
 import xiazdong.me.fragmentdemo.R;
-import xiazdong.me.fragmentdemo.config.GlobalContext;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
 import xiazdong.me.fragmentdemo.util.PrefUtils;
 
@@ -29,8 +26,6 @@ import xiazdong.me.fragmentdemo.util.PrefUtils;
  */
 
 public class MaterialFragment extends Fragment {
-
-    public static final String PREFS_KEY_SELECTED_MATERIAL = "selected_material";
 
     private static final String ARG_KEY_LIST = "material_in_page";
     private static final String ARG_KEY_TAB_INDEX = "tab_index";
@@ -59,6 +54,7 @@ public class MaterialFragment extends Fragment {
         View root = inflater.inflate(R.layout.material, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
         mAdapter = new MaterialAdapter(R.layout.item_recyclerview, mData);
+        Timber.d("tab = " + mTabIndex + ", page = " + mPageIndex + ", " + mData.toString());
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, MaterialPagerAdapter.COLUMN));
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -77,7 +73,7 @@ public class MaterialFragment extends Fragment {
                 }
                 CategoryFragment cFragment = (CategoryFragment) getParentFragment();
                 cFragment.updateMaterialViewPager();
-                mActivity.updateCategoryViewPager();
+                mActivity.updateCategoryViewPager(false);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

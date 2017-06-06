@@ -46,7 +46,6 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         if (this.updateCurrentTab) {
-            this.updateCurrentTab = false;
             return POSITION_NONE;
         }
         CategoryFragment fragment = (CategoryFragment) object;

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import timber.log.Timber;
 import xiazdong.me.fragmentdemo.R;
@@ -47,7 +46,6 @@ public class CategoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.category, container, false);
         mPager = (ViewPager) root.findViewById(R.id.pager);
         mIndicator = (CirclePageIndicator) root.findViewById(R.id.indicator);
-
         return root;
     }
 
@@ -59,6 +57,7 @@ public class CategoryFragment extends Fragment {
         mMaterialLoader.setOnMaterialLoadedListener(new MaterialLoader.OnMaterialLoadedListener() {
             @Override
             public void onLoadFinished(ArrayList<MaterialMetaData> datas) {
+                Timber.d("load tab's material, tab = " + mPosition + ", " + datas);
                 mMaterialAdapter = new MaterialPagerAdapter(getChildFragmentManager(), mPosition, datas);
                 mPager.setAdapter(mMaterialAdapter);
                 mIndicator.setViewPager(mPager);
