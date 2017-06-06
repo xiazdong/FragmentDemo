@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import timber.log.Timber;
 import xiazdong.me.fragmentdemo.R;
 import xiazdong.me.fragmentdemo.config.GlobalContext;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
@@ -23,7 +24,7 @@ public class MaterialAdapter extends BaseQuickAdapter<MaterialMetaData, BaseView
     }
     @Override
     protected void convert(BaseViewHolder helper, MaterialMetaData item) {
-        int position = helper.getAdapterPosition();
+        int position = helper.getLayoutPosition();
         helper.setText(R.id.text, item.name);
         TextView text = helper.getView(R.id.text);
         int selectedId = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, -1);

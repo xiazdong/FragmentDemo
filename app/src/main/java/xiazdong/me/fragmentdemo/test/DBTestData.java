@@ -14,7 +14,7 @@ import xiazdong.me.fragmentdemo.db.MaterialMetaData;
 
 public final class DBTestData {
     public static class Category {
-        private static String[] names = {"已下载", "最新", "动物", "氛围", "变脸"};
+        private static String[] names = {"已下载", "装饰", "动物", "氛围", "变脸"};
         private static CategoryMetaData getMetaData(int id, String name) {
             return new CategoryMetaData(id, name);
         }

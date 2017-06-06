@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class MaterialFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MaterialAdapter mAdapter;
     private Demo3Activity mActivity;
-    private SharedPreferences mSf;
 
     @Override
     public void onAttach(Context context) {
@@ -53,6 +53,7 @@ public class MaterialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.material, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
+        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false); //禁用动画
         mAdapter = new MaterialAdapter(R.layout.item_recyclerview, mData);
         Timber.d("[onCreateView] tab = " + mTabIndex + ", page = " + mPageIndex + ", " + mData.toString());
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, MaterialPagerAdapter.COLUMN));
