@@ -40,7 +40,7 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
-        Timber.d("[destroyItem] " + position);
+        Timber.d("[destroyItem] tab = " + position);
     }
 
     @Override

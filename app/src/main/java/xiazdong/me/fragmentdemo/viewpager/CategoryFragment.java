@@ -52,7 +52,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d("onResume " + mPosition);
+        Timber.d("[onResume] tab = " + mPosition);
         mMaterialLoader = new MaterialLoader(this, mPosition);
         mMaterialLoader.setOnMaterialLoadedListener(new MaterialLoader.OnMaterialLoadedListener() {
             @Override

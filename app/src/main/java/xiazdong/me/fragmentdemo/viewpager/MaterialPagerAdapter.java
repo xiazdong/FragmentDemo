@@ -38,7 +38,7 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Timber.d("instantiateItem");
+        Timber.d("[instantiateItem], tab = " + mTabIndex + ", page = " + position);
         return super.instantiateItem(container, position);
     }
 
@@ -77,5 +77,11 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
             }
         }
         return super.getItemPosition(object);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+        Timber.d("[destroyItem], tab = " + mTabIndex + ", page = " + position);
     }
 }

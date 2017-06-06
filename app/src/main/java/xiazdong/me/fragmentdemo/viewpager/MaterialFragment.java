@@ -54,7 +54,7 @@ public class MaterialFragment extends Fragment {
         View root = inflater.inflate(R.layout.material, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
         mAdapter = new MaterialAdapter(R.layout.item_recyclerview, mData);
-        Timber.d("tab = " + mTabIndex + ", page = " + mPageIndex + ", " + mData.toString());
+        Timber.d("[onCreateView] tab = " + mTabIndex + ", page = " + mPageIndex + ", " + mData.toString());
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, MaterialPagerAdapter.COLUMN));
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
