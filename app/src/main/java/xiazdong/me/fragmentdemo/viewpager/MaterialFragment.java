@@ -78,7 +78,19 @@ public class MaterialFragment extends Fragment {
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, mPageIndex);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_TAB, mTabIndex);
                 data.downloaded = 1;
-                if (oldTabIndex == -1) return;
+                if (oldTabIndex == -1 ) {
+                    /**
+                     * 如果原来没选择元素
+                     * 1. 当前tab＝1，那么更新tab0
+                     * 2. 当前tab＝0，那么更新tab1
+                     */
+                    if (tabIndex == 1) {
+                        mActivity.updateCategoryViewPager(0);
+                    } else if (tabIndex == 0) {
+                        mActivity.updateCategoryViewPager(1);
+                    }
+                    return;
+                }
                 /**
                  * 如果同一页找到了原来选择的元素，那么更新
                  */
