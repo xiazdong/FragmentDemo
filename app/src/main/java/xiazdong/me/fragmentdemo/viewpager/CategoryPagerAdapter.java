@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import timber.log.Timber;
-import xiazdong.me.fragmentdemo.util.PrefUtils;
 
 /**
  * Created by xiazdong on 17/6/4.
@@ -14,7 +13,10 @@ import xiazdong.me.fragmentdemo.util.PrefUtils;
 
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     private int mTabCount;
-    private boolean updateCurrentTab;
+    private int mUpdateFlag = -2;
+    private int mCurrentTabIndex;
+
+    public static final int FLAG_UPDATE_LEFT_AND_RIGHT = -1;
 
     public CategoryPagerAdapter(FragmentManager fm, int count) {
         super(fm);
@@ -45,22 +47,24 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        if (this.updateCurrentTab) {
-            return POSITION_NONE;
-        }
         CategoryFragment fragment = (CategoryFragment) object;
-        int index = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
-        if (index != -1) {
-            if (index != fragment.getIndex()) {
+        if (mUpdateFlag == FLAG_UPDATE_LEFT_AND_RIGHT) {
+            if (mCurrentTabIndex != fragment.getIndex()) {
                 return POSITION_NONE;
-            } else {
-                return POSITION_UNCHANGED;
+            }
+        } else {
+            if (mUpdateFlag == fragment.getIndex()) {
+                return POSITION_NONE;
             }
         }
         return super.getItemPosition(object);
     }
 
-    public void setUpdateCurrentTab(boolean updateCurrentTab) {
-        this.updateCurrentTab = updateCurrentTab;
+    public void setUpdateFlag(int flag) {
+        this.mUpdateFlag = flag;
+    }
+
+    public void setCurrentTabIndex(int tabIndex) {
+        this.mCurrentTabIndex = tabIndex;
     }
 }

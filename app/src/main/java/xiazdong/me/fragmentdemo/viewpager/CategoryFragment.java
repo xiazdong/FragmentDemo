@@ -74,7 +74,8 @@ public class CategoryFragment extends Fragment {
         return fragment;
     }
 
-    public void updateMaterialViewPager() {
+    public void updateMaterialViewPager(int currentPageIndex, int pageIndex) {
+        mMaterialAdapter.setUpdatePage(currentPageIndex, pageIndex);
         mMaterialAdapter.notifyDataSetChanged();
     }
 

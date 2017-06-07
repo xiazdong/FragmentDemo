@@ -6,11 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import timber.log.Timber;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
-import xiazdong.me.fragmentdemo.util.PrefUtils;
 
 /**
  * Created by xiazdong on 17/6/4.
@@ -24,6 +22,9 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
 
     private int mTabIndex;
     private ArrayList<MaterialMetaData> mData;
+
+    private int mCurrentPageIndex = -1;
+    private int mUpdatePageIndex = -1;
 
     public MaterialPagerAdapter(FragmentManager fm, int tabIndex, ArrayList<MaterialMetaData> datas) {
         super(fm);
@@ -63,18 +64,13 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
     public int getItemPosition(Object object) {
         MaterialFragment fragment = (MaterialFragment) object;
         int pageIndex = fragment.getPageIndex();
-        int tabIndex = fragment.getTabIndex();
-        int selectedTabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
-        int selectedPageIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, -1);
-        /**
-         * 只刷新当前选择的item的tab下，当前page的左右两个page
-         */
-        if (selectedTabIndex != -1 && selectedPageIndex != -1 && tabIndex == selectedTabIndex) {
-            int left = selectedPageIndex - 1;
-            int right = selectedPageIndex + 1;
-            if (left == pageIndex || right == pageIndex) {
+        if (mUpdatePageIndex == -1) {
+            if (mCurrentPageIndex != pageIndex) {
                 return POSITION_NONE;
             }
+        }
+        if (mUpdatePageIndex == pageIndex) {
+            return POSITION_NONE;
         }
         return super.getItemPosition(object);
     }
@@ -83,5 +79,10 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
         Timber.d("[destroyItem], tab = " + mTabIndex + ", page = " + position);
+    }
+
+    public void setUpdatePage(int currentPageIndex, int pageIndex) {
+        this.mCurrentPageIndex = currentPageIndex;
+        this.mUpdatePageIndex = pageIndex;
     }
 }
