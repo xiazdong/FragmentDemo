@@ -68,6 +68,7 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         mPager.setCurrentItem(tab.getPosition());
+        mCategoryAdapter.setCurrentTabIndex(tab.getPosition());
     }
 
     @Override
@@ -84,6 +85,7 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     @Override
     public void onPageSelected(int position) {
         mTabLayout.getTabAt(position).select();
+        mCategoryAdapter.setCurrentTabIndex(position);
     }
 
     @Override
@@ -91,15 +93,18 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
 
     }
 
-    public void updateCategoryViewPager(boolean updateCurrentTab) {
-        mCategoryAdapter.setUpdateCurrentTab(updateCurrentTab);
+    public void updateCategoryViewPager(int tabIndex) {
+        mCategoryAdapter.setUpdateFlag(tabIndex);
         mCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
-        clearSelectedPreference();
-        updateCategoryViewPager(true);
+        int tabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
+        if (tabIndex != -1) {
+            updateCategoryViewPager(tabIndex);
+            clearSelectedPreference();
+        }
     }
 
     public void clearSelectedPreference() {
