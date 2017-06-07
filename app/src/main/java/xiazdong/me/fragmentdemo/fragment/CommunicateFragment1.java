@@ -1,7 +1,6 @@
 package xiazdong.me.fragmentdemo.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import xiazdong.me.fragmentdemo.R;
 
 public class CommunicateFragment1 extends Fragment {
-    private static final String ARG_PARAM1= "param1";
+    private static final String ARG_PARAM1 = "param1";
 
     private String mParam1;
     private OnFragmentInteractionListener mListener;
@@ -37,9 +36,9 @@ public class CommunicateFragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_communicate_fragment1, container, false);
-        Button button = (Button)view.findViewById(R.id.btn_comm);
-        Button button2 = (Button)view.findViewById(R.id.btn_comm2);
-        TextView text = (TextView)view.findViewById(R.id.text);
+        Button button = (Button) view.findViewById(R.id.btn_comm);
+        Button button2 = (Button) view.findViewById(R.id.btn_comm2);
+        TextView text = (TextView) view.findViewById(R.id.text);
         text.setText(mParam1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +74,7 @@ public class CommunicateFragment1 extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String str);
+
         void toAnotherFragment(String str);
     }
 }

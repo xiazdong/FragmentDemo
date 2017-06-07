@@ -21,6 +21,7 @@ public class CategoryLoader implements ILoader, LoaderManager.LoaderCallbacks<Cu
 
     private FragmentActivity mActivity;
     private OnCategoryLoadedListener mListener;
+
     public interface OnCategoryLoadedListener {
         void onLoadFinished(List<CategoryMetaData> datas);
     }
@@ -32,6 +33,7 @@ public class CategoryLoader implements ILoader, LoaderManager.LoaderCallbacks<Cu
     public void setOnCategoryLoadedListener(OnCategoryLoadedListener listener) {
         this.mListener = listener;
     }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Loader<Cursor> loader = null;
@@ -53,7 +55,8 @@ public class CategoryLoader implements ILoader, LoaderManager.LoaderCallbacks<Cu
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {}
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 
     private List<CategoryMetaData> processCategory(Cursor cursor) {
         List<CategoryMetaData> categoryList = new ArrayList<>();
@@ -69,5 +72,6 @@ public class CategoryLoader implements ILoader, LoaderManager.LoaderCallbacks<Cu
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

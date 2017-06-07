@@ -55,7 +55,7 @@ public class MaterialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.material, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerview);
-        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mAdapter = new MaterialAdapter(R.layout.item_recyclerview, mData);
         Timber.d("[onCreateView] tab = " + mTabIndex + ", page = " + mPageIndex + ", " + mData.toString());
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, MaterialPagerAdapter.COLUMN));
@@ -71,14 +71,15 @@ public class MaterialFragment extends Fragment {
                 CategoryFragment cFragment = (CategoryFragment) getParentFragment();
                 int tabIndex = getTabIndex();
                 int pageIndex = getPageIndex();
-                if (oldTabIndex == tabIndex && oldPageIndex == pageIndex && oldPosition == position) return;
+                if (oldTabIndex == tabIndex && oldPageIndex == pageIndex && oldPosition == position)
+                    return;
                 adapter.notifyItemChanged(position);
                 DBOperator.updateMaterialDownloaded(data._id);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, data._id);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, mPageIndex);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_TAB, mTabIndex);
                 data.downloaded = 1;
-                if (oldTabIndex == -1 ) {
+                if (oldTabIndex == -1) {
                     /**
                      * 如果原来没选择元素
                      * 1. 当前tab＝1，那么更新tab0
@@ -129,7 +130,7 @@ public class MaterialFragment extends Fragment {
                         if (oldPageIndex != pageIndex) {
                             cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
                         }
-                    } else if (oldTabIndex == 0){
+                    } else if (oldTabIndex == 0) {
                         cFragment.updateMaterialViewPager(mPageIndex, -1);
                         mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
                     } else if (oldTabIndex == 2) {
@@ -171,7 +172,7 @@ public class MaterialFragment extends Fragment {
 
     private int getPositionByMaterialId(int id) {
         if (id < 0) return -1;
-        for(int i=0; i < mData.size(); i++) {
+        for (int i = 0; i < mData.size(); i++) {
             MaterialMetaData data = mData.get(i);
             if (data._id == id) {
                 return i;
@@ -191,6 +192,7 @@ public class MaterialFragment extends Fragment {
     public int getPageIndex() {
         return mPageIndex;
     }
+
     public int getTabIndex() {
         return mTabIndex;
     }

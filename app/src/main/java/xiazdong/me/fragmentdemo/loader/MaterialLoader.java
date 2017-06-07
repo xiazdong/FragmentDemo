@@ -7,10 +7,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import xiazdong.me.fragmentdemo.config.GlobalContext;
-import xiazdong.me.fragmentdemo.db.CategoryMetaData;
 import xiazdong.me.fragmentdemo.db.DBOperator;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
 
@@ -32,6 +30,7 @@ public class MaterialLoader implements ILoader, LoaderManager.LoaderCallbacks<Cu
     public void setOnMaterialLoadedListener(OnMaterialLoadedListener listener) {
         this.mListener = listener;
     }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Loader<Cursor> loader = null;

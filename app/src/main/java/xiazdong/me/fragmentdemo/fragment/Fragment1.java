@@ -16,7 +16,7 @@ import xiazdong.me.fragmentdemo.R;
  * Created by xiazdong on 17/5/24.
  */
 
-public class Fragment1 extends Fragment{
+public class Fragment1 extends Fragment {
 
     @Override
     public void onAttach(Context context) {
@@ -64,6 +64,7 @@ public class Fragment1 extends Fragment{
         });
         return view;
     }
+
     @Override
     public void onStart() {
         Timber.d("[onStart] BEGIN");

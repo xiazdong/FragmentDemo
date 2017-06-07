@@ -12,6 +12,7 @@ import xiazdong.me.fragmentdemo.config.GlobalContext;
 public final class DBContract {
     public static final String DB_NAME = "test.db";
     public static final String BASE_CONTENT_URI = "content://" + GlobalContext.getContext().getPackageName() + ".provider.DBProvider/";
+
     public static class Category implements BaseColumns {
         public static final String TABLE_NAME = "category";
         public static final String COLUM_NAME_ID = "id";
@@ -19,6 +20,7 @@ public final class DBContract {
         public static final Uri CONTENT_URI = Uri.parse(BASE_CONTENT_URI + TABLE_NAME);
         public static final String ITEM_TYPE = "vnd.android.cursor.dir/vnd.xiazdong.me.category";
     }
+
     public static class Material implements BaseColumns {
         public static final String TABLE_NAME = "material";
         public static final String COLUM_NAME_CID = "cid";

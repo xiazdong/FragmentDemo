@@ -23,9 +23,10 @@ public class DBProvider extends ContentProvider {
     private static final int CODE_CATEGORIES = 0x01;
     private static final int CODE_MATERIALS = 0x02;
     private static final int CODE_MATERIAL_DOWNLOADED = 0x03;
+
     @Override
     public boolean onCreate() {
-        AUTHORITY = getContext().getPackageName()  + AUTHORITY;
+        AUTHORITY = getContext().getPackageName() + AUTHORITY;
         mMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         mMatcher.addURI(AUTHORITY, DBContract.Category.TABLE_NAME, CODE_CATEGORIES);
         mMatcher.addURI(AUTHORITY, DBContract.Material.TABLE_NAME, CODE_MATERIALS);

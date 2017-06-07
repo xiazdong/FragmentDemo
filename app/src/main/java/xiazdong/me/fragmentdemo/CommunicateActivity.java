@@ -1,13 +1,11 @@
 package xiazdong.me.fragmentdemo;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import xiazdong.me.fragmentdemo.fragment.CommunicateFragment1;
 import xiazdong.me.fragmentdemo.fragment.CommunicateFragment2;
-import xiazdong.me.fragmentdemo.fragment.Fragment1;
 
 public class CommunicateActivity extends AppCompatActivity implements CommunicateFragment1.OnFragmentInteractionListener {
 
@@ -15,8 +13,8 @@ public class CommunicateActivity extends AppCompatActivity implements Communicat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_communicate);
-        getSupportFragmentManager().beginTransaction().add(R.id.container1, CommunicateFragment1.newInstance("Activity Data"),"f1").commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.container2, CommunicateFragment2.newInstance("Activity Data"),"f2").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container1, CommunicateFragment1.newInstance("Activity Data"), "f1").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container2, CommunicateFragment2.newInstance("Activity Data"), "f2").commit();
 
     }
 

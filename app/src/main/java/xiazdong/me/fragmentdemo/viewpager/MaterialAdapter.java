@@ -1,6 +1,5 @@
 package xiazdong.me.fragmentdemo.viewpager;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-import timber.log.Timber;
 import xiazdong.me.fragmentdemo.R;
 import xiazdong.me.fragmentdemo.config.GlobalContext;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;

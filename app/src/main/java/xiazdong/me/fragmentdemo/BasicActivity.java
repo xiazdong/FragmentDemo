@@ -1,16 +1,13 @@
 package xiazdong.me.fragmentdemo;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
-import xiazdong.me.fragmentdemo.fragment.CommunicateFragment1;
 import xiazdong.me.fragmentdemo.fragment.Fragment1;
-import xiazdong.me.fragmentdemo.fragment.Fragment2;
-import xiazdong.me.fragmentdemo.fragment.Fragment3;
 
 public class BasicActivity extends AppCompatActivity {
 

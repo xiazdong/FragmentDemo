@@ -2,24 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <Button
         android:id="@+id/btn_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1、Fragment基本使用"
-        />
+        android:text="1、Fragment基本使用" />
+
     <Button
         android:id="@+id/btn_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2、Fragment通信"
-        />
+        android:text="2、Fragment通信" />
+
     <Button
         android:id="@+id/btn_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="3、TabLayout, ViewPager, Fragment"
-        />
+        android:text="3、TabLayout, ViewPager, Fragment" />
 </LinearLayout>

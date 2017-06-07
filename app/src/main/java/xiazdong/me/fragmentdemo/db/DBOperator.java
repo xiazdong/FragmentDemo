@@ -21,6 +21,7 @@ public class DBOperator {
     public static void insertData() {
         mDBHelper.insertData();
     }
+
     public static Loader<Cursor> loadCategorys(Context context) {
         return new CursorLoader(context, DBContract.Category.CONTENT_URI, null, null, null, null);
     }
@@ -32,6 +33,7 @@ public class DBOperator {
     public static Loader<Cursor> loadDownloadedMaterials(Context ctx) {
         return new CursorLoader(ctx, DBContract.Material.CONTENT_URI, null, "downloaded = 1", null, null);
     }
+
     public static void updateMaterialDownloaded(int id) {
         ContentResolver resolver = GlobalContext.getContext().getContentResolver();
         ContentValues values = new ContentValues();
@@ -46,6 +48,7 @@ public class DBOperator {
         builder.setTables(DBContract.Category.TABLE_NAME);
         return builder.query(db, null, null, null, null, null, null);
     }
+
     public static Cursor queryMaterials(String selection, String[] selectArgs) {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         SQLiteDatabase db = mDBHelper.getReadableDatabase();

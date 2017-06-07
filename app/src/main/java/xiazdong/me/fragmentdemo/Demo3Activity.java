@@ -1,19 +1,17 @@
 package xiazdong.me.fragmentdemo;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 import xiazdong.me.fragmentdemo.db.CategoryMetaData;
 import xiazdong.me.fragmentdemo.loader.CategoryLoader;
 import xiazdong.me.fragmentdemo.util.PrefUtils;
@@ -50,7 +48,7 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     }
 
     private void setTabLayout(List<CategoryMetaData> datas) {
-        for(CategoryMetaData data : datas) {
+        for (CategoryMetaData data : datas) {
             TabLayout.Tab tab = mTabLayout.newTab();
             View customView = LayoutInflater.from(this).inflate(R.layout.tab_custom, null);
             TextView text = (TextView) customView.findViewById(R.id.text);
@@ -72,10 +70,12 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     }
 
     @Override
-    public void onTabUnselected(TabLayout.Tab tab) {}
+    public void onTabUnselected(TabLayout.Tab tab) {
+    }
 
     @Override
-    public void onTabReselected(TabLayout.Tab tab) {}
+    public void onTabReselected(TabLayout.Tab tab) {
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -103,8 +103,9 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         int currentTabIndex = mPager.getCurrentItem();
         int tabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
         if (currentTabIndex >= 2) {
-            if (Math.abs(currentTabIndex - tabIndex) <= 1)
-            updateCategoryViewPager(tabIndex);
+            if (Math.abs(currentTabIndex - tabIndex) <= 1) {
+                updateCategoryViewPager(tabIndex);
+            }
         } else {
             updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_ALL);
         }

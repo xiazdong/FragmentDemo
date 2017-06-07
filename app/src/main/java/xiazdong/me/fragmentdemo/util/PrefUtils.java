@@ -13,6 +13,7 @@ public final class PrefUtils {
     public static final String PREFS_KEY_SELECTED_MATERIAL = "selected_material";
     public static final String PREFS_KEY_SELECTED_PAGE = "selected_page";
     public static final String PREFS_KEY_SELECTED_TAB = "selected_tab";
+
     public static void putBoolean(String key, boolean value) {
         SharedPreferences sp = GlobalContext.getContext().getSharedPreferences("test",
                 Context.MODE_PRIVATE);

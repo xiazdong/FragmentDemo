@@ -46,10 +46,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void insertData() {
         List<CategoryMetaData> cList = DBTestData.Category.genTestData();
         List<MaterialMetaData> mList = DBTestData.Material.genTestData();
-        for(CategoryMetaData data : cList) {
+        for (CategoryMetaData data : cList) {
             insertCategoryData(data);
         }
-        for(MaterialMetaData data : mList) {
+        for (MaterialMetaData data : mList) {
             insertMaterialData(data);
         }
     }
@@ -62,7 +62,6 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql2);
         onCreate(sqLiteDatabase);
     }
-
 
 
 }

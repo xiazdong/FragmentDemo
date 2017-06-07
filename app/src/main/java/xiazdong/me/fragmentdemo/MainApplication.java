@@ -19,6 +19,7 @@ import xiazdong.me.fragmentdemo.db.DBOperator;
 public class MainApplication extends Application {
     private static final String PREFS_KEY_IS_FIRST_LAUNCH = "is_first_launch";
     private DBHelper mDBHelper;
+
     @Override
     public void onCreate() {
         super.onCreate();

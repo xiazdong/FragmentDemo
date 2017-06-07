@@ -3,22 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_margin="3dp"
-    android:background="#dddddd"
-    >
+    android:background="#dddddd">
+
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:textIsSelectable="true"
-        android:clickable="true"
-        />
+        android:clickable="true" />
+
     <ImageView
         android:id="@+id/download"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@mipmap/ic_download"
         android:scaleType="fitCenter"
-        android:layout_gravity="bottom|right"
-        />
+        android:layout_gravity="bottom|right" />
 </FrameLayout>

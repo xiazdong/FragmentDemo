@@ -45,6 +45,7 @@ public class Fragment2 extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Timber.d("[onActivityCreated] END");
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Timber.d("[onCreateView]");
