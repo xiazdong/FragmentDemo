@@ -22,12 +22,14 @@ public class DBProvider extends ContentProvider {
 
     private static final int CODE_CATEGORIES = 0x01;
     private static final int CODE_MATERIALS = 0x02;
+    private static final int CODE_MATERIAL_DOWNLOADED = 0x03;
     @Override
     public boolean onCreate() {
         AUTHORITY = getContext().getPackageName()  + AUTHORITY;
         mMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         mMatcher.addURI(AUTHORITY, DBContract.Category.TABLE_NAME, CODE_CATEGORIES);
         mMatcher.addURI(AUTHORITY, DBContract.Material.TABLE_NAME, CODE_MATERIALS);
+        mMatcher.addURI(AUTHORITY, DBContract.Material.TABLE_NAME + "/downloaded", CODE_MATERIAL_DOWNLOADED);
         return true;
     }
 
@@ -52,6 +54,7 @@ public class DBProvider extends ContentProvider {
             case CODE_CATEGORIES:
                 return DBContract.Category.ITEM_TYPE;
             case CODE_MATERIALS:
+            case CODE_MATERIAL_DOWNLOADED:
                 return DBContract.Material.ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unknow URI: " + uri);
@@ -71,6 +74,11 @@ public class DBProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        switch (mMatcher.match(uri)) {
+            case CODE_MATERIAL_DOWNLOADED:
+                return DBOperator.updateMaterialDownloaded(values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Unknow URI: " + uri);
+        }
     }
 }

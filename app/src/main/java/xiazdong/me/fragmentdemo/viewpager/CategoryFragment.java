@@ -15,6 +15,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 import java.util.ArrayList;
 
 import timber.log.Timber;
+import xiazdong.me.fragmentdemo.Demo3Activity;
 import xiazdong.me.fragmentdemo.R;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
 import xiazdong.me.fragmentdemo.loader.MaterialLoader;
@@ -25,7 +26,7 @@ import xiazdong.me.fragmentdemo.loader.MaterialLoader;
 
 public class CategoryFragment extends Fragment {
     private static final String ARG_KEY_POSITION = "position";
-    private Activity mActivity;
+    private Demo3Activity mActivity;
     private int mPosition;
     private MaterialLoader mMaterialLoader;
 
@@ -36,7 +37,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (Activity) context;
+        this.mActivity = (Demo3Activity) context;
         mPosition = getArguments().getInt(ARG_KEY_POSITION);
     }
 
@@ -46,6 +47,9 @@ public class CategoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.category, container, false);
         mPager = (ViewPager) root.findViewById(R.id.pager);
         mIndicator = (CirclePageIndicator) root.findViewById(R.id.indicator);
+        mMaterialAdapter = new MaterialPagerAdapter(getChildFragmentManager(), mPosition);
+        mPager.setAdapter(mMaterialAdapter);
+        mIndicator.setViewPager(mPager);
         return root;
     }
 
@@ -58,9 +62,8 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onLoadFinished(ArrayList<MaterialMetaData> datas) {
                 Timber.d("load tab's material, tab = " + mPosition + ", " + datas);
-                mMaterialAdapter = new MaterialPagerAdapter(getChildFragmentManager(), mPosition, datas);
-                mPager.setAdapter(mMaterialAdapter);
-                mIndicator.setViewPager(mPager);
+                mMaterialAdapter.setSourceData(datas);
+                updateMaterialViewPager(mActivity.getCurrentTabIndex(), -1);
             }
         });
         mMaterialLoader.start();

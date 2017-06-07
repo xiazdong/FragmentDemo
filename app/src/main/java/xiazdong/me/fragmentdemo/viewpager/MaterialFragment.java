@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import timber.log.Timber;
 import xiazdong.me.fragmentdemo.Demo3Activity;
 import xiazdong.me.fragmentdemo.R;
+import xiazdong.me.fragmentdemo.db.DBOperator;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
 import xiazdong.me.fragmentdemo.util.PrefUtils;
 
@@ -72,9 +73,11 @@ public class MaterialFragment extends Fragment {
                 int pageIndex = getPageIndex();
                 if (oldTabIndex == tabIndex && oldPageIndex == pageIndex && oldPosition == position) return;
                 adapter.notifyItemChanged(position);
+                DBOperator.updateMaterialDownloaded(data._id);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, data._id);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, mPageIndex);
                 PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_TAB, mTabIndex);
+                data.downloaded = 1;
                 if (oldTabIndex == -1) return;
                 /**
                  * 如果同一页找到了原来选择的元素，那么更新
@@ -119,6 +122,8 @@ public class MaterialFragment extends Fragment {
                         mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
                     } else if (oldTabIndex == 2) {
                         mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+                    } else {
+                        mActivity.updateCategoryViewPager(0);
                     }
                 } else if (tabIndex == 0) {
                     mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
@@ -161,6 +166,14 @@ public class MaterialFragment extends Fragment {
             }
         }
         return -1;
+    }
+
+    public void setSourceData(ArrayList<MaterialMetaData> data) {
+        this.mData = data;
+        if (mRecyclerView != null && mRecyclerView.getAdapter() != null) {
+            mAdapter = new MaterialAdapter(R.layout.item_recyclerview, mData);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     public int getPageIndex() {

@@ -25,6 +25,7 @@ public final class DBContract {
         public static final String COLUM_NAME_NAME = "name";
         public static final String COLUM_NAME_DOWNLOADED = "downloaded";
         public static final Uri CONTENT_URI = Uri.parse(BASE_CONTENT_URI + TABLE_NAME);
+        public static final Uri CONTENT_URI_DOWNLOADED = Uri.parse(BASE_CONTENT_URI + TABLE_NAME + "/downloaded");
         public static final String ITEM_TYPE = "vnd.android.cursor.dir/vnd.xiazdong.me.material";
 
     }

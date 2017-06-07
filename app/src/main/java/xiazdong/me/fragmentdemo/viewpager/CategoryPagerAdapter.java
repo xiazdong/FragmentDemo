@@ -13,10 +13,11 @@ import timber.log.Timber;
 
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     private int mTabCount;
-    private int mUpdateFlag = -2;
+    private int mUpdateFlag = -3;
     private int mCurrentTabIndex;
 
     public static final int FLAG_UPDATE_LEFT_AND_RIGHT = -1;
+    public static final int FLAG_UPDATE_ALL = -2;
 
     public CategoryPagerAdapter(FragmentManager fm, int count) {
         super(fm);
@@ -48,7 +49,9 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         CategoryFragment fragment = (CategoryFragment) object;
-        if (mUpdateFlag == FLAG_UPDATE_LEFT_AND_RIGHT) {
+        if (mUpdateFlag == FLAG_UPDATE_ALL) {
+            return POSITION_NONE;
+        } else if (mUpdateFlag == FLAG_UPDATE_LEFT_AND_RIGHT) {
             if (mCurrentTabIndex != fragment.getIndex()) {
                 return POSITION_NONE;
             }

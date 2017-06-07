@@ -17,7 +17,6 @@ import xiazdong.me.fragmentdemo.db.MaterialMetaData;
 public class MaterialPagerAdapter extends FragmentPagerAdapter {
 
     public static final int COUNT = 8;
-    public static final int ROW = 2;
     public static final int COLUMN = 4;
 
     private int mTabIndex;
@@ -26,10 +25,13 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
     private int mCurrentPageIndex = -1;
     private int mUpdatePageIndex = -1;
 
-    public MaterialPagerAdapter(FragmentManager fm, int tabIndex, ArrayList<MaterialMetaData> datas) {
+    public MaterialPagerAdapter(FragmentManager fm, int tabIndex) {
         super(fm);
         this.mTabIndex = tabIndex;
-        this.mData = datas;
+    }
+
+    public void setSourceData(ArrayList<MaterialMetaData> data) {
+        this.mData = data;
     }
 
     @Override
@@ -40,11 +42,15 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Timber.d("[instantiateItem], tab = " + mTabIndex + ", page = " + position);
-        return super.instantiateItem(container, position);
+        MaterialFragment fragment = (MaterialFragment) super.instantiateItem(container, position);
+        Timber.d("[instantiateItem], material = " + getMaterials(position));
+        fragment.setSourceData(getMaterials(position));
+        return fragment;
     }
 
     @Override
     public int getCount() {
+        if (mData == null || mData.size() == 0) return 0;
         int offset = mData.size() % COUNT;
         int page = mData.size() / COUNT;
         if (offset == 0) {

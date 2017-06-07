@@ -100,17 +100,25 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
 
     @Override
     public void onClick(View v) {
+        int currentTabIndex = mPager.getCurrentItem();
         int tabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
-        if (tabIndex != -1) {
+        if (currentTabIndex >= 2) {
+            if (Math.abs(currentTabIndex - tabIndex) <= 1)
             updateCategoryViewPager(tabIndex);
-            clearSelectedPreference();
+        } else {
+            updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_ALL);
         }
+        clearSelectedPreference();
     }
 
     public void clearSelectedPreference() {
         PrefUtils.remove(PrefUtils.PREFS_KEY_SELECTED_TAB);
         PrefUtils.remove(PrefUtils.PREFS_KEY_SELECTED_PAGE);
         PrefUtils.remove(PrefUtils.PREFS_KEY_SELECTED_MATERIAL);
+    }
+
+    public int getCurrentTabIndex() {
+        return mPager.getCurrentItem();
     }
 
 

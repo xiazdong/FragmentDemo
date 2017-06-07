@@ -1,6 +1,8 @@
 package xiazdong.me.fragmentdemo.viewpager;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,17 +24,23 @@ public class MaterialAdapter extends BaseQuickAdapter<MaterialMetaData, BaseView
     public MaterialAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
+
     @Override
     protected void convert(BaseViewHolder helper, MaterialMetaData item) {
         int position = helper.getLayoutPosition();
         helper.setText(R.id.text, item.name);
         TextView text = helper.getView(R.id.text);
+        ImageView download = helper.getView(R.id.download);
         int selectedId = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, -1);
         MaterialMetaData data = mData.get(position);
         if (data._id == selectedId) {
+            download.setVisibility(View.GONE);
             text.setTextColor(GlobalContext.getContext().getResources().getColor(R.color.colorAccent));
         } else {
+            download.setImageResource(R.mipmap.ic_download);
+            download.setVisibility(data.downloaded == 1 ? View.GONE : View.VISIBLE);
             text.setTextColor(GlobalContext.getContext().getResources().getColor(android.R.color.black));
         }
     }
 }
+
