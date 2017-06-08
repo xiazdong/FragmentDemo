@@ -113,17 +113,17 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         if (tabIndex == -1) {
             return;
         }
-        CategoryFragment fragment = (CategoryFragment) mCategoryAdapter.instantiateItem(mPager, tabIndex);
-        int currentPageIndex = fragment.getCurrentPageIndex();
+        clearSelectedPreference();
+        CategoryFragment currentFragment = (CategoryFragment) mCategoryAdapter.instantiateItem(mPager, currentTabIndex);
+        int currentPageIndex = currentFragment.getCurrentPageIndex();
         if (currentTabIndex >= 2) {
-            updateWhenTabLargerThan1(fragment, currentTabIndex, currentPageIndex, tabIndex, pageIndex, materialId);
+            updateWhenTabLargerThan1(currentFragment, currentTabIndex, currentPageIndex, tabIndex, pageIndex, materialId);
         } else if (currentTabIndex == 1){
-            updateWhenTabIs1(fragment, currentPageIndex, tabIndex, pageIndex, materialId);
+            updateWhenTabIs1(currentFragment, currentPageIndex, tabIndex, pageIndex, materialId);
         } else {
-            updateWhenTabIs0(fragment, currentPageIndex, materialId);
+            updateWhenTabIs0(currentFragment, currentPageIndex, tabIndex, materialId);
         }
         mNoneView.setTextColor(getResources().getColor(R.color.colorAccent));
-        clearSelectedPreference();
     }
 
     public void clearSelectedPreference() {
@@ -169,11 +169,13 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         }
     }
 
-    public void updateWhenTabIs0(CategoryFragment fragment, int currentPageIndex, int materialId) {
+    public void updateWhenTabIs0(CategoryFragment fragment, int currentPageIndex, int tabIndex, int materialId) {
         MaterialFragment mFragment = fragment.getMaterialFragment(currentPageIndex);
         mFragment.updateItem(materialId);
         fragment.updateMaterialViewPager(currentPageIndex, -1);
-        updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        if (tabIndex <= 1) {
+            updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        }
     }
 
     @Override
