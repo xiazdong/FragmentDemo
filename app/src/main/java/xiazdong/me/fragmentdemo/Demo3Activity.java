@@ -63,7 +63,7 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         mCategoryAdapter = new CategoryPagerAdapter(getSupportFragmentManager(), datas.size());
         mPager.setAdapter(mCategoryAdapter);
         if (mTabLayout.getTabCount() > 0) {
-            mTabLayout.getTabAt(0).select();
+            mTabLayout.getTabAt(1).select();
         }
     }
 
@@ -106,6 +106,9 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     public void onClick(View v) {
         int currentTabIndex = mPager.getCurrentItem();
         int tabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
+        if (tabIndex == -1) {
+            return;
+        }
         if (currentTabIndex >= 2) {
             if (Math.abs(currentTabIndex - tabIndex) <= 1) {
                 updateCategoryViewPager(tabIndex);
