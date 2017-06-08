@@ -8,13 +8,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@drawable/tab_text_color" />
+        android:textColor="@drawable/tab_text_color"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        />
 
     <ImageView
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@id/text"
         android:src="@mipmap/tab_indicator" />
 </RelativeLayout>
