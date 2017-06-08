@@ -89,4 +89,11 @@ public class CategoryFragment extends Fragment {
         return mTabIndex;
     }
 
+    public int getCurrentPageIndex() {
+        return mPager.getCurrentItem();
+    }
+
+    public MaterialFragment getMaterialFragment(int pageIndex) {
+        return mMaterialAdapter.getMaterialFragment(mPager, pageIndex);
+    }
 }

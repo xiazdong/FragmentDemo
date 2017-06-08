@@ -16,7 +16,9 @@
             android:layout_height="50dp"
             android:text="无"
             android:gravity="center"
-            android:clickable="true" />
+            android:clickable="true"
+            android:textColor="@color/colorAccent"
+            />
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"

@@ -96,4 +96,8 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
         this.mCurrentPageIndex = currentPageIndex;
         this.mUpdatePageIndex = pageIndex;
     }
+
+    public MaterialFragment getMaterialFragment(ViewGroup container, int position) {
+        return (MaterialFragment) super.instantiateItem(container, position);
+    }
 }

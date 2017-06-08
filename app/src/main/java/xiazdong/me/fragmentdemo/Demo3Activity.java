@@ -15,7 +15,9 @@ import butterknife.ButterKnife;
 import xiazdong.me.fragmentdemo.db.CategoryMetaData;
 import xiazdong.me.fragmentdemo.loader.CategoryLoader;
 import xiazdong.me.fragmentdemo.util.PrefUtils;
+import xiazdong.me.fragmentdemo.viewpager.CategoryFragment;
 import xiazdong.me.fragmentdemo.viewpager.CategoryPagerAdapter;
+import xiazdong.me.fragmentdemo.viewpager.MaterialFragment;
 
 public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener, View.OnClickListener {
 
@@ -106,16 +108,21 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
     public void onClick(View v) {
         int currentTabIndex = mPager.getCurrentItem();
         int tabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
+        int pageIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, -1);
+        int materialId = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, -1);
         if (tabIndex == -1) {
             return;
         }
+        CategoryFragment fragment = (CategoryFragment) mCategoryAdapter.instantiateItem(mPager, tabIndex);
+        int currentPageIndex = fragment.getCurrentPageIndex();
         if (currentTabIndex >= 2) {
-            if (Math.abs(currentTabIndex - tabIndex) <= 1) {
-                updateCategoryViewPager(tabIndex);
-            }
+            updateWhenTabLargerThan1(fragment, currentTabIndex, currentPageIndex, tabIndex, pageIndex, materialId);
+        } else if (currentTabIndex == 1){
+            updateWhenTabIs1(fragment, currentPageIndex, tabIndex, pageIndex, materialId);
         } else {
-            updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_ALL);
+            updateWhenTabIs0(fragment, currentPageIndex, materialId);
         }
+        mNoneView.setTextColor(getResources().getColor(R.color.colorAccent));
         clearSelectedPreference();
     }
 
@@ -129,6 +136,45 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         return mPager.getCurrentItem();
     }
 
+    public void updateNoneView() {
+        mNoneView.setTextColor(getResources().getColor(android.R.color.black));
+    }
+
+    public void updateWhenTabLargerThan1(CategoryFragment fragment, int currentTabIndex, int currentPageIndex, int tabIndex, int pageIndex, int materialId) {
+        if (Math.abs(currentTabIndex - tabIndex) == 1) {
+            updateCategoryViewPager(tabIndex);
+        } else if (currentTabIndex == tabIndex){
+            if (pageIndex != currentPageIndex) {
+                fragment.updateMaterialViewPager(currentPageIndex, pageIndex);
+            } else {
+                MaterialFragment mFragment = fragment.getMaterialFragment(pageIndex);
+                mFragment.updateItem(materialId);
+            }
+        }
+    }
+
+    public void updateWhenTabIs1(CategoryFragment fragment, int currentPageIndex, int tabIndex, int pageIndex, int materialId) {
+        if (tabIndex == 2 || tabIndex == 0) {
+            updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        } else if (tabIndex == 1) {
+            updateCategoryViewPager(0);
+            if (currentPageIndex != pageIndex) {
+                fragment.updateMaterialViewPager(currentPageIndex, pageIndex);
+            } else {
+                MaterialFragment mFragment = fragment.getMaterialFragment(pageIndex);
+                mFragment.updateItem(materialId);
+            }
+        } else {
+            updateCategoryViewPager(0);
+        }
+    }
+
+    public void updateWhenTabIs0(CategoryFragment fragment, int currentPageIndex, int materialId) {
+        MaterialFragment mFragment = fragment.getMaterialFragment(currentPageIndex);
+        mFragment.updateItem(materialId);
+        fragment.updateMaterialViewPager(currentPageIndex, -1);
+        updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+    }
 
     @Override
     protected void onDestroy() {

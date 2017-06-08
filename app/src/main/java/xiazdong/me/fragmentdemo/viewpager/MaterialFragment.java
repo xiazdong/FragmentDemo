@@ -67,6 +67,7 @@ public class MaterialFragment extends Fragment {
 
                 int tabIndex = getTabIndex();
                 int pageIndex = getPageIndex();
+                mActivity.updateNoneView();
                 if (oldTabIndex == tabIndex && oldPageIndex == pageIndex && oldPosition == position)
                     return;
                 updateCurrentPage(adapter, position, oldPosition);
@@ -216,5 +217,12 @@ public class MaterialFragment extends Fragment {
 
     public int getTabIndex() {
         return mTabIndex;
+    }
+
+    public void updateItem(int materialId) {
+        int position = getPositionByMaterialId(materialId);
+        if (position != -1) {
+            mAdapter.notifyItemChanged(position);
+        }
     }
 }

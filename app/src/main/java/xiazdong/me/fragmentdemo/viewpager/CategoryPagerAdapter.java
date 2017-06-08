@@ -25,7 +25,6 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     private int mCurrentTabIndex;  //始终为当前滑到的tab索引
 
     public static final int FLAG_UPDATE_LEFT_AND_RIGHT = -1;
-    public static final int FLAG_UPDATE_ALL = -2;
 
     public CategoryPagerAdapter(FragmentManager fm, int count) {
         super(fm);
@@ -57,9 +56,7 @@ public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         CategoryFragment fragment = (CategoryFragment) object;
-        if (mUpdateFlag == FLAG_UPDATE_ALL) {
-            return POSITION_NONE;
-        } else if (mUpdateFlag == FLAG_UPDATE_LEFT_AND_RIGHT) {
+        if (mUpdateFlag == FLAG_UPDATE_LEFT_AND_RIGHT) {
             if (mCurrentTabIndex != fragment.getIndex()) {
                 return POSITION_NONE;
             }

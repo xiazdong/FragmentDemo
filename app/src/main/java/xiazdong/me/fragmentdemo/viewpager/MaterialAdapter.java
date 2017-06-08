@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import timber.log.Timber;
 import xiazdong.me.fragmentdemo.R;
 import xiazdong.me.fragmentdemo.config.GlobalContext;
 import xiazdong.me.fragmentdemo.db.MaterialMetaData;
@@ -31,6 +32,7 @@ public class MaterialAdapter extends BaseQuickAdapter<MaterialMetaData, BaseView
         ImageView download = helper.getView(R.id.download);
         int selectedId = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, -1);
         MaterialMetaData data = mData.get(position);
+        Timber.d("convert " + data.name);
         if (data._id == selectedId) {
             download.setVisibility(View.GONE);
             text.setTextColor(GlobalContext.getContext().getResources().getColor(R.color.colorAccent));
