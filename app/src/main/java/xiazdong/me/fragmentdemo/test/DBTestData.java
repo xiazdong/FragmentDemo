@@ -37,12 +37,11 @@ public final class DBTestData {
         }
 
         public static List<MaterialMetaData> genTestData() {
-            Random random = new Random();
             ArrayList<MaterialMetaData> list = new ArrayList<>();
             for (int i = 0; i < count.length; i++) {
                 for (int j = 0; j < count[i]; j++) {
                     String name = i + "-" + j;
-                    int downloaded = random.nextInt(2);
+                    int downloaded = 0;
                     list.add(getMetaData(i, name, downloaded));
                 }
             }

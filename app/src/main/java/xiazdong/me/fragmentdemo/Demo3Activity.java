@@ -34,6 +34,13 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo3);
         ButterKnife.bind(this);
+        mTabLayout.addOnTabSelectedListener(this);
+        mPager.addOnPageChangeListener(this);
+        mNoneView.setOnClickListener(this);
+        loadTabCategory();
+    }
+
+    private void loadTabCategory() {
         mCategoryLoader = new CategoryLoader(this);
         mCategoryLoader.setOnCategoryLoadedListener(new CategoryLoader.OnCategoryLoadedListener() {
             @Override
@@ -42,9 +49,6 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
             }
         });
         mCategoryLoader.start();
-        mTabLayout.addOnTabSelectedListener(this);
-        mPager.addOnPageChangeListener(this);
-        mNoneView.setOnClickListener(this);
     }
 
     private void setTabLayout(List<CategoryMetaData> datas) {

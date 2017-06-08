@@ -1,7 +1,6 @@
 package xiazdong.me.fragmentdemo.viewpager;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +39,6 @@ public class MaterialFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MaterialAdapter mAdapter;
     private Demo3Activity mActivity;
-    private SharedPreferences mSf;
 
     @Override
     public void onAttach(Context context) {
@@ -62,102 +60,125 @@ public class MaterialFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MaterialMetaData data = mData.get(position);
                 int oldTabIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_TAB, -1);
                 int oldPageIndex = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, -1);
                 int oldSelectedId = PrefUtils.getInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, -1);
                 int oldPosition = getPositionByMaterialId(oldSelectedId);
 
-                CategoryFragment cFragment = (CategoryFragment) getParentFragment();
                 int tabIndex = getTabIndex();
                 int pageIndex = getPageIndex();
                 if (oldTabIndex == tabIndex && oldPageIndex == pageIndex && oldPosition == position)
                     return;
-                adapter.notifyItemChanged(position);
-                DBOperator.updateMaterialDownloaded(data._id);
-                PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, data._id);
-                PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, mPageIndex);
-                PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_TAB, mTabIndex);
-                data.downloaded = 1;
+                updateCurrentPage(adapter, position, oldPosition);
                 if (oldTabIndex == -1) {
-                    /**
-                     * 如果原来没选择元素
-                     * 1. 当前tab＝1，那么更新tab0
-                     * 2. 当前tab＝0，那么更新tab1
-                     */
-                    if (tabIndex == 1) {
-                        mActivity.updateCategoryViewPager(0);
-                    } else if (tabIndex == 0) {
-                        mActivity.updateCategoryViewPager(1);
-                    }
-                    return;
-                }
-                /**
-                 * 如果同一页找到了原来选择的元素，那么更新
-                 */
-                if (oldPosition != -1) {
-                    adapter.notifyItemChanged(oldPosition);
+                    updateWhenNoOldSelected();
                 }
                 if (tabIndex >= 2) {
-                    /**
-                     * 1. 原来选择的元素的tab=现在选择的元素tab
-                     *      如果不在同一页，那么更新old page
-                     * 2. 如果原来选择的元素tab在相邻页
-                     *      更新该页
-                     */
-                    if (oldTabIndex == tabIndex) {
-                        if (oldPageIndex != pageIndex) {
-                            cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
-                        }
-                    } else if (Math.abs(tabIndex - oldTabIndex) == 1) {
-                        mActivity.updateCategoryViewPager(oldTabIndex);
-                    } else if (oldTabIndex == 0) {
-                        cFragment.updateMaterialViewPager(mPageIndex, -1);
-                        mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
-                    }
+                    updateWhenTabLargerThan2(oldTabIndex, oldPageIndex, tabIndex, pageIndex);
                 } else if (tabIndex == 1) {
-                    /**
-                     * 1. 如果原来选择的元素tab==现在的tab
-                     *      更新已下载tab
-                     *      如果不在当前页，那么刷新那一页
-                     * 2. 如果原来选择的tab是tab 0
-                     *      更新除了当前page的其他页
-                     * 3. 如果原来选择的tab是tab 2
-                     *      更新左右两个tab
-                     */
-                    if (oldTabIndex == tabIndex) {
-                        mActivity.updateCategoryViewPager(0);
-                        if (oldPageIndex != pageIndex) {
-                            cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
-                        }
-                    } else if (oldTabIndex == 0) {
-                        cFragment.updateMaterialViewPager(mPageIndex, -1);
-                        mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
-                    } else if (oldTabIndex == 2) {
-                        mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
-                    } else {
-                        mActivity.updateCategoryViewPager(0);
-                    }
+                    updateWhenTabIs1(oldTabIndex, oldPageIndex, tabIndex, pageIndex);
                 } else if (tabIndex == 0) {
-                    mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
-                    /**
-                     * 1. 如果原来选择的tab=当前tab
-                     *      如果原来选择元素页不是当前页，更新那一页
-                     * 2. 如果原来选择的tab不是当前tab
-                     *      更新除了当前页以外的所有页
-                     */
-                    if (oldTabIndex == tabIndex) {
-                        if (oldPageIndex != pageIndex) {
-                            cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
-                        }
-                    } else {
-                        cFragment.updateMaterialViewPager(mPageIndex, -1);
-                    }
+                    updateWhenTabIs0(oldTabIndex, oldPageIndex, tabIndex, pageIndex);
                 }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
         return root;
+    }
+
+    private void updateCurrentPage(BaseQuickAdapter adapter, int position, int oldPosition) {
+        MaterialMetaData data = mData.get(position);
+        adapter.notifyItemChanged(position);
+        DBOperator.updateMaterialDownloaded(data._id);
+        PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_MATERIAL, data._id);
+        PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_PAGE, mPageIndex);
+        PrefUtils.putInt(PrefUtils.PREFS_KEY_SELECTED_TAB, mTabIndex);
+        data.downloaded = 1;
+        /**
+         * 如果同一页找到了原来选择的元素，那么更新
+         */
+        if (oldPosition != -1) {
+            adapter.notifyItemChanged(oldPosition);
+        }
+    }
+
+    private void updateWhenNoOldSelected() {
+        int tabIndex = getTabIndex();
+        /**
+         * 如果原来没选择元素
+         * 1. 当前tab＝1，那么更新tab0
+         * 2. 当前tab＝0，那么更新tab1
+         */
+        if (tabIndex == 1) {
+            mActivity.updateCategoryViewPager(0);
+        } else if (tabIndex == 0) {
+            mActivity.updateCategoryViewPager(1);
+        }
+        return;
+    }
+
+    private void updateWhenTabLargerThan2(int oldTabIndex, int oldPageIndex, int tabIndex, int pageIndex) {
+        CategoryFragment cFragment = (CategoryFragment) getParentFragment();
+        /**
+         * 1. 原来选择的元素的tab=现在选择的元素tab
+         *      如果不在同一页，那么更新old page
+         * 2. 如果原来选择的元素tab在相邻页
+         *      更新该页
+         */
+        if (oldTabIndex == tabIndex) {
+            if (oldPageIndex != pageIndex) {
+                cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
+            }
+        } else if (Math.abs(tabIndex - oldTabIndex) == 1) {
+            mActivity.updateCategoryViewPager(oldTabIndex);
+        } else if (oldTabIndex == 0) {
+            cFragment.updateMaterialViewPager(mPageIndex, -1);
+            mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        }
+    }
+
+    private void updateWhenTabIs1(int oldTabIndex, int oldPageIndex, int tabIndex, int pageIndex) {
+        CategoryFragment cFragment = (CategoryFragment) getParentFragment();
+        /**
+         * 1. 如果原来选择的元素tab==现在的tab
+         *      更新已下载tab
+         *      如果不在当前页，那么刷新那一页
+         * 2. 如果原来选择的tab是tab 0
+         *      更新除了当前page的其他页
+         * 3. 如果原来选择的tab是tab 2
+         *      更新左右两个tab
+         */
+        if (oldTabIndex == tabIndex) {
+            mActivity.updateCategoryViewPager(0);
+            if (oldPageIndex != pageIndex) {
+                cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
+            }
+        } else if (oldTabIndex == 0) {
+            cFragment.updateMaterialViewPager(mPageIndex, -1);
+            mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        } else if (oldTabIndex == 2) {
+            mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        } else {
+            mActivity.updateCategoryViewPager(0);
+        }
+    }
+
+    private void updateWhenTabIs0(int oldTabIndex, int oldPageIndex, int tabIndex, int pageIndex) {
+        CategoryFragment cFragment = (CategoryFragment) getParentFragment();
+        mActivity.updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
+        /**
+         * 1. 如果原来选择的tab=当前tab
+         *      如果原来选择元素页不是当前页，更新那一页
+         * 2. 如果原来选择的tab不是当前tab
+         *      更新除了当前页以外的所有页
+         */
+        if (oldTabIndex == tabIndex) {
+            if (oldPageIndex != pageIndex) {
+                cFragment.updateMaterialViewPager(mPageIndex, oldPageIndex);
+            }
+        } else {
+            cFragment.updateMaterialViewPager(mPageIndex, -1);
+        }
     }
 
     public static MaterialFragment newInstance(int tabIndex, int pageIndex, ArrayList<MaterialMetaData> data) {

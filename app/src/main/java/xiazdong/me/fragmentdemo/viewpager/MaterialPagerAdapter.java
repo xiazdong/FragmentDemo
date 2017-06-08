@@ -22,6 +22,12 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
     private int mTabIndex;
     private ArrayList<MaterialMetaData> mData;
 
+    /**
+     * mUpdatePageIndex为要更新的page
+     * mCurrentPageIndex为当前是哪个page
+     * 1、mUpdatePageIndex=-1，那么除了mCurrentPageIndex，其他都更新
+     * 2、>=0，那么只更新该索引
+     */
     private int mCurrentPageIndex = -1;
     private int mUpdatePageIndex = -1;
 
@@ -41,9 +47,8 @@ public class MaterialPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Timber.d("[instantiateItem], tab = " + mTabIndex + ", page = " + position);
         MaterialFragment fragment = (MaterialFragment) super.instantiateItem(container, position);
-        Timber.d("[instantiateItem], material = " + getMaterials(position));
+        Timber.d("[instantiateItem], tab = " + mTabIndex + ", page = " + position + ", material = " + getMaterials(position));
         fragment.setSourceData(getMaterials(position));
         return fragment;
     }

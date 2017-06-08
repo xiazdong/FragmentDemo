@@ -26,7 +26,7 @@ import xiazdong.me.fragmentdemo.loader.MaterialLoader;
 public class CategoryFragment extends Fragment {
     private static final String ARG_KEY_POSITION = "position";
     private Demo3Activity mActivity;
-    private int mPosition;
+    private int mTabIndex;
     private MaterialLoader mMaterialLoader;
 
     private ViewPager mPager;
@@ -37,7 +37,7 @@ public class CategoryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Demo3Activity) context;
-        mPosition = getArguments().getInt(ARG_KEY_POSITION);
+        mTabIndex = getArguments().getInt(ARG_KEY_POSITION);
     }
 
     @Nullable
@@ -46,7 +46,7 @@ public class CategoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.category, container, false);
         mPager = (ViewPager) root.findViewById(R.id.pager);
         mIndicator = (CirclePageIndicator) root.findViewById(R.id.indicator);
-        mMaterialAdapter = new MaterialPagerAdapter(getChildFragmentManager(), mPosition);
+        mMaterialAdapter = new MaterialPagerAdapter(getChildFragmentManager(), mTabIndex);
         mPager.setAdapter(mMaterialAdapter);
         mIndicator.setViewPager(mPager);
         return root;
@@ -55,12 +55,16 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d("[onResume] tab = " + mPosition);
-        mMaterialLoader = new MaterialLoader(this, mPosition);
+        Timber.d("[onResume] tab = " + mTabIndex);
+        loadMaterials();
+    }
+
+    private void loadMaterials() {
+        mMaterialLoader = new MaterialLoader(this, mTabIndex);
         mMaterialLoader.setOnMaterialLoadedListener(new MaterialLoader.OnMaterialLoadedListener() {
             @Override
             public void onLoadFinished(ArrayList<MaterialMetaData> datas) {
-                Timber.d("load tab's material, tab = " + mPosition + ", " + datas);
+                Timber.d("load tab's material, tab = " + mTabIndex + ", " + datas);
                 mMaterialAdapter.setSourceData(datas);
                 updateMaterialViewPager(mActivity.getCurrentTabIndex(), -1);
             }
@@ -82,7 +86,7 @@ public class CategoryFragment extends Fragment {
     }
 
     public int getIndex() {
-        return mPosition;
+        return mTabIndex;
     }
 
 }

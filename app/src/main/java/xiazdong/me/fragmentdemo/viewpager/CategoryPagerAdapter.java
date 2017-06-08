@@ -13,8 +13,16 @@ import timber.log.Timber;
 
 public class CategoryPagerAdapter extends FragmentStatePagerAdapter {
     private int mTabCount;
+    /**
+     * mUpdateFlag决定了对某个Fragment，getItemPosition返回的是POSITION_NONE还是POSITION_UNCHANGED
+     * 1. FLAG_UPDATE_LEFT_AND_RIGHT: 只更新mCurrentTabIndex相邻的tab
+     * 2. FLAG_UPDATE_ALL: 更新所有tab
+     * 3. >=0的整数，只更新这个索引的tab
+     *
+     * 所以每次要调用adapter.notifyDataSetChanged()之前要调用setUpdateFlag()设置更新策略。
+     */
     private int mUpdateFlag = -3;
-    private int mCurrentTabIndex;
+    private int mCurrentTabIndex;  //始终为当前滑到的tab索引
 
     public static final int FLAG_UPDATE_LEFT_AND_RIGHT = -1;
     public static final int FLAG_UPDATE_ALL = -2;
