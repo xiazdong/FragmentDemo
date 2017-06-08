@@ -155,6 +155,9 @@ public class Demo3Activity extends AppCompatActivity implements TabLayout.OnTabS
 
     public void updateWhenTabIs1(CategoryFragment fragment, int currentPageIndex, int tabIndex, int pageIndex, int materialId) {
         if (tabIndex == 2 || tabIndex == 0) {
+            MaterialFragment mFragment = fragment.getMaterialFragment(currentPageIndex);
+            mFragment.updateItem(materialId);
+            fragment.updateMaterialViewPager(currentPageIndex, -1);
             updateCategoryViewPager(CategoryPagerAdapter.FLAG_UPDATE_LEFT_AND_RIGHT);
         } else if (tabIndex == 1) {
             updateCategoryViewPager(0);
