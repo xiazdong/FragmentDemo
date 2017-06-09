@@ -14,8 +14,6 @@ public class DialogActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_dialog)
     Button mDialogBtn;
-    @BindView(R.id.btn_stop)
-    Button mStopBtn;
 
     ProgressDialogFragment fragment = ProgressDialogFragment.newInstance();
     @Override
