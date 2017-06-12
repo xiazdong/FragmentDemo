@@ -30,6 +30,9 @@ public class DialogActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 SystemClock.sleep(5000);
+                if (fragment == null) {
+                    fragment = (ProgressDialogFragment) getSupportFragmentManager().findFragmentByTag("progressDialog");
+                }
                 fragment.dismiss();
             }
         }.start();

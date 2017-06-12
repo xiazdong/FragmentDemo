@@ -26,7 +26,11 @@
             android:name=".provider.DBProvider"
             android:authorities="xiazdong.me.fragmentdemo.provider.DBProvider" />
 
-        <activity android:name=".DialogActivity"></activity>
+        <activity android:name=".DialogActivity" />
+        <activity
+            android:name=".LazyActivity"
+            android:label="@string/title_activity_lazy"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
