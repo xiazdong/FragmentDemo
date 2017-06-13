@@ -25,16 +25,17 @@ public class DialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fragment.show(getSupportFragmentManager(), "progressDialog");
+                new Thread() {
+                    public void run() {
+                        SystemClock.sleep(5000);
+                        if (fragment == null) {
+                            fragment = (ProgressDialogFragment) getSupportFragmentManager().findFragmentByTag("progressDialog");
+                        }
+                        fragment.dismiss();
+                    }
+                }.start();
             }
         });
-        new Thread() {
-            public void run() {
-                SystemClock.sleep(5000);
-                if (fragment == null) {
-                    fragment = (ProgressDialogFragment) getSupportFragmentManager().findFragmentByTag("progressDialog");
-                }
-                fragment.dismiss();
-            }
-        }.start();
+
     }
 }
