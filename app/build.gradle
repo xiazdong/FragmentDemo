@@ -32,7 +32,8 @@ dependencies {
     compile 'com.airbnb.android:lottie:1.5.3'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'me.majiajie:pager-bottom-tab-strip:2.1.0'
+    annotationProcessor 'com.zhy.fabridge:fabridge-compiler:1.0.0'
+    compile 'com.zhy.fabridge:fabridge-api:1.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     debugCompile 'com.facebook.stetho:stetho:1.5.0'
-
 }

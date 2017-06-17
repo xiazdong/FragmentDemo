@@ -22,5 +22,12 @@
         android:layout_below="@id/btn_comm"
         android:text="Fragment向Fragment传递数据" />
 
+    <Button
+        android:id="@+id/btn_comm3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_comm2"
+        android:text="FABridge传递数据"
+        />
 
 </RelativeLayout>
